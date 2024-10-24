@@ -1,0 +1,19 @@
+<div *ngIf="movie">
+    <h2>{{ movie.title }} - {{ movie.genre }}</h2>
+    <p><strong>Director:</strong> {{ movie.director }}</p>
+    <p><strong>Release Date:</strong> {{ movie.releaseDate | date }}</p>
+    <p><strong>Description:</strong> {{ movie.description }}</p>
+  
+    <h3>Reviews</h3>
+    <ul *ngIf="movie.reviews && movie.reviews.length > 0">
+      <li *ngFor="let review of movie.reviews">
+        <strong>{{ review.reviewerName }}</strong> - Rating: {{ review.rating }}/5
+        <p>{{ review.reviewText }}</p>
+      </li>
+    </ul>
+    <p *ngIf="!movie.reviews || movie.reviews.length === 0">No reviews available for this movie.</p>
+  
+    <!-- Back to Home Button -->
+    <button class="btn btn-primary mt-3" (click)="goBack()">Back to Home</button>
+  </div>
+  
