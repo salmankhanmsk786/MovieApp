@@ -1,129 +1,144 @@
-<div class="movie-container">
-  <h2>Movie List</h2>
-  
-  <div class="search-container">
-    <input type="text" placeholder="Search movies..." [(ngModel)]="searchTerm" (input)="searchMovies()" />
+<!-- movie-list.component.html -->
+<div class="container">
+  <!-- Material Table Section -->
+  <div class="mat-elevation-z8 ">
+
+    <div class="filter">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search movies..." #input>
+    </mat-form-field>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- Title Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+        <td mat-cell *matCellDef="let movie"> {{movie.title}} </td>
+      </ng-container>
+
+      <!-- Genre Column -->
+      <ng-container matColumnDef="genre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Genre </th>
+        <td mat-cell *matCellDef="let movie"> {{movie.genre}} </td>
+      </ng-container>
+
+      <!-- Release Date Column -->
+      <ng-container matColumnDef="releaseDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Release Date </th>
+        <td mat-cell *matCellDef="let movie"> {{movie.releaseDate | date:'mediumDate'}} </td>
+      </ng-container>
+
+      <!-- Director Column -->
+      <ng-container matColumnDef="director">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Director </th>
+        <td mat-cell *matCellDef="let movie"> {{movie.director}} </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let movie">
+          <button mat-icon-button color="primary" (click)="editMovie(movie)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteMovie(movie.id!)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button color="accent" [routerLink]="['/movie', movie.id]">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" (click)="openReviewModal(movie)">
+            <mat-icon>rate_review</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of movies"></mat-paginator>
   </div>
-  
-  <!-- Movie List -->
-<ul *ngIf="filteredMovies.length > 0; else noMoviesTemplate" class="movie-list">
-  <li *ngFor="let movie of filteredMovies" class="movie-item">
-    <div class="movie-title">
-      <strong>{{ movie.title }}</strong> - {{ movie.genre }}
-      <span class="release-date">({{ movie.releaseDate | date: 'longDate' }})</span>
-    </div>
-    <div class="movie-director">
-      Directed by: <em>{{ movie.director }}</em>
-    </div>
-    <div class="movie-actions">
-      <button (click)="editMovie(movie)">Edit</button>
-      <button (click)="movie.id !== null && movie.id !== undefined && deleteMovie(movie.id)">Delete</button>
-    </div>
-    
-    <h4>Movie Reviews</h4>
-    
-      <ul *ngIf="movie.reviews && movie.reviews.length > 0; else noReviewsTemplate">
-        <!-- Slice to show only the first 3 reviews -->
-        <li *ngFor="let review of movie.reviews.slice(0, 3)">
-          <strong>{{ review.reviewerName }}</strong> - Rating: {{ review.rating }}/5
-          <p>{{ review.reviewText }}</p>
-        </li>
-      </ul>
-      <ng-template #noReviewsTemplate>
-        <p>No reviews available for this movie.</p>
-      </ng-template>
 
-          <!-- Button to select movie for writing a review -->
-          <button class="btn btn-primary" (click)="openReviewModal(movie)">Add Review</button>
-          <button class="btn btn-info mt-2" [routerLink]="['/movie', movie.id]">View Full Details</button>
+<!-- Add Movie Button -->
+<div class="mt-4">
+  <button mat-raised-button color="primary" (click)="openAddMovieForm()">Add New Movie</button>
+</div>
 
-          
-        </li>
-      </ul>
-
-    <!-- Success message for review submission -->
-    <div *ngIf="showSuccessMessage" class="alert alert-success">
-      Your review has been submitted successfully!
-    </div>
-
-
-
-<!-- Modal for Adding Review -->
-<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true" *ngIf="selectedMovie">
+<!-- Add Movie Form Modal -->
+<div class="modal fade" id="addMovieModal" [hidden]="true" tabindex="-1" aria-labelledby="addMovieModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="reviewModalLabel">Add a Review for {{ selectedMovie.title }}</h5>
+        <h5 class="modal-title" id="addMovieModalLabel">Add New Movie</h5>
       </div>
       <div class="modal-body">
-        <!-- Add the form variable 'reviewForm' to handle form validation -->
-        <form #reviewForm="ngForm" (ngSubmit)="addReview()" novalidate>
-          <div>
-            <label for="reviewerName">Reviewer Name:</label>
-            <input
-              type="text"
-              [(ngModel)]="newReview.reviewerName"
-              name="reviewerName"
-              required
-              #reviewerName="ngModel"
-              class="form-control"
-            />
-            <!-- Show validation error if the reviewer name is not filled -->
-            <div *ngIf="reviewerName.invalid && reviewerName.touched" class="text-danger">
-              Reviewer name is required.
-            </div>
-          </div>
+        <form #movieForm="ngForm" (ngSubmit)="submitMovie()" novalidate>
+          <mat-form-field appearance="fill" class="w-100 form-field">
+            <mat-label>Title</mat-label>
+            <input matInput
+                   name="title"
+                   [(ngModel)]="newMovie.title"
+                   required
+                   #title="ngModel">
+            <mat-error *ngIf="title.invalid && title.touched">
+              Title is required
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field appearance="fill" class="w-100 form-field">
+            <mat-label>Genre</mat-label>
+            <mat-select
+                   name="genre"
+                   [(ngModel)]="newMovie.genre"
+                   required
+                   #genre="ngModel">
+              <mat-option *ngFor="let genre of genres" [value]="genre">
+                {{ genre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="genre.invalid && genre.touched">
+              Genre is required
+            </mat-error>
+          </mat-form-field>
+         
 
-          <div>
-            <label for="reviewText">Review Text:</label>
-            <textarea
-              [(ngModel)]="newReview.reviewText"
-              name="reviewText"
-              required
-              #reviewText="ngModel"
-              class="form-control"
-            ></textarea>
-          </div>
+          <mat-form-field appearance="fill" class="w-100 form-field">
+            <mat-label>Release Date</mat-label>
+            <input matInput
+                   [matDatepicker]="picker"
+                   name="releaseDate"
+                   [(ngModel)]="newMovie.releaseDate"
+                   required
+                   #releaseDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="releaseDate.invalid && releaseDate.touched">
+              Release date is required
+            </mat-error>
+          </mat-form-field>
 
-          <div>
-            <label for="rating">Rating:</label>
-            <input
-              type="number"
-              [(ngModel)]="newReview.rating"
-              name="rating"
-              required
-              min="1"
-              max="5"
-              #rating="ngModel"
-              class="form-control"
-            />
-            <!-- Show validation error if the rating is not filled -->
-            <div *ngIf="rating.invalid && rating.touched" class="text-danger">
-              Rating is required and must be between 1 and 5.
-            </div>
-          </div>
-
-          <!-- Submit and Cancel Buttons -->
-          <div class="mt-3">
-            <!-- Disable the submit button if the form is invalid -->
-            <button
-              type="submit"
-              class="btn btn-success"
-              [ngClass]="{'btn-disabled': reviewForm.invalid}"
-
-              [disabled]="reviewForm.invalid"
-            >
-              Submit Review
+          <mat-form-field appearance="fill" class="w-100 form-field">
+            <mat-label>Director</mat-label>
+            <input matInput
+                   name="director"
+                   [(ngModel)]="newMovie.director"
+                   required
+                   #director="ngModel">
+            <mat-error *ngIf="director.invalid && director.touched">
+              Director is required
+            </mat-error>
+          </mat-form-field>
+          
+          <div class="modal-buttons">
+            <button color="primary"  mat-raised-button ="submit"  [disabled]="movieForm.invalid">
+              {{ isEditing ? 'Update' : 'Submit' }} Movie
             </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              (click)="closeReviewModal()"
-            >
-              Cancel
-            </button>
+            
+            <button color="primary" mat-raised-button data-bs-dismiss="modal">Cancel</button>
           </div>
+          
         </form>
       </div>
     </div>
@@ -131,35 +146,84 @@
 </div>
 
 
-</div>
-    
-<ng-template #noMoviesTemplate>
-  <p>No movies available.</p>
-</ng-template>
-
-
-<div class="form-container">
-  <div class="add-movie-form ">
-    <h3>Add a New Movie</h3>
-    <form (ngSubmit)="isEditing ? updateMovie() : addMovie()">
-      <div>
-        <label for="title">Title:</label>
-        <input type="text" [(ngModel)]="newMovie.title" name="title" required />
-      </div>
-      <div>
-        <label for="genre">Genre:</label>
-        <input type="text" [(ngModel)]="newMovie.genre" name="genre" required />
-      </div>
-      <div>
-        <label for="releaseDate">Release Date:</label>
-        <input type="date" [(ngModel)]="newMovie.releaseDate" name="releaseDate" required />
-      </div>
-      <div>
-        <label for="director">Director:</label>
-        <input type="text" [(ngModel)]="newMovie.director" name="director" required />
-      </div>
-      <button type="submit">{{ isEditing ? 'Update Movie' : 'Add Movie' }}</button>
-    </form>
-  </div>
-</div>
+<!-- Reviews Section -->
+<div *ngIf="selectedMovie">
+  <h4>Movie Reviews</h4>
   
+  <mat-list *ngIf="selectedMovie.reviews && selectedMovie.reviews.length > 0; else noReviewsTemplate">
+    <mat-list-item *ngFor="let review of selectedMovie.reviews.slice(0, 3)">
+      <strong>{{ review.reviewerName }}</strong> - Rating: {{ review.rating }}/5
+      <p>{{ review.reviewText }}</p>
+    </mat-list-item>
+  </mat-list>
+
+  <ng-template #noReviewsTemplate>
+    <p>No reviews available for this movie.</p>
+  </ng-template>
+
+  <button mat-raised-button color="primary" (click)="openReviewModal(selectedMovie)">Add Review</button>
+  <button mat-raised-button color="accent" class="ml-2" [routerLink]="['/movie', selectedMovie.id]">View Full Details</button>
+</div>
+
+
+<!-- Dialog for Adding Review -->
+<ng-template #reviewDialog>
+  <h2 mat-dialog-title>Add a Review for {{ selectedMovie?.title }}</h2>
+  <mat-dialog-content>
+    <form #reviewForm="ngForm" (ngSubmit)="addReview()" novalidate>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Reviewer Name</mat-label>
+        <input matInput
+          [(ngModel)]="newReview.reviewerName"
+          name="reviewerName"
+          required
+          #reviewerName="ngModel">
+        <mat-error *ngIf="reviewerName.invalid && reviewerName.touched">
+          Reviewer name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width ">
+        <mat-label>Review Text</mat-label>
+        <textarea matInput
+          [(ngModel)]="newReview.reviewText"
+          name="reviewText"
+          required
+          #reviewText="ngModel"
+          rows="4">
+        </textarea>
+        <mat-error *ngIf="reviewText.invalid && reviewText.touched">
+          Review text is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Rating</mat-label>
+        <mat-select [(ngModel)]="newReview.rating" name="rating" required #rating="ngModel">
+          <mat-option *ngFor="let star of [1, 2, 3, 4, 5]" [value]="star">
+            <mat-icon *ngFor="let i of [].constructor(star)">star</mat-icon>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="rating.invalid && rating.touched">
+          Rating is required and must be between 1 and 5
+        </mat-error>
+      </mat-form-field>
+
+      <div class="button-row">
+        <button mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="reviewForm.invalid">
+          Submit Review
+        </button>
+        <button mat-button
+          type="button"
+          (click)="closeDialog()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </mat-dialog-content>
+</ng-template>
+</div>
+

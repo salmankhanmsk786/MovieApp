@@ -1,24 +1,51 @@
 <nav class="navbar">
-
-  
   <div class="navbar-logo" [routerLink]="['/movies']">
-    <img src="assets/images/logo.png" alt="Logo" class="navbar-logo">
+    <img src="assets/images/logo.png" alt="Logo" class="navbar-logo" />
   </div>
-
 
   <div class="navbar-title">
-    <h4>Movie Management</h4>
+    <h5>Movie Management</h5>
   </div>
   <ul class="navbar-links">
-    <a class="nav-link" [routerLink]="['/movies']">Home</a>
-    <a class="nav-link" [routerLink]="['/about']">About</a>
-    
+    <a class="nav-home" [routerLink]="['/movies']">
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="home"
+      ></mat-icon>
+      Home
+    </a>
 
-    
+    <a class="nav-article" [routerLink]="['/about']">
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example article icon"
+        fontIcon="article"
+      ></mat-icon>
+      About</a
+    >
   </ul>
   <div class="navbar-actions">
     <!-- Add login/logout buttons or user-related actions here if needed -->
 
+    <span class="separator"></span>
+    <a
+      *ngIf="!isLoggedIn"
+      mat-flat-button
+      color="primary"
+      [routerLink]="['/login']"
+    >
+      Login
+    </a>
+    <a *ngIf="isLoggedIn" mat-flat-button color="primary" (click)="onLogout()" [routerLink]="['/login']">
+      Logout
+    </a>
+    
+    <span *ngIf="isLoggedIn">{{ email }}</span>
+
+    <a *ngIf="!isLoggedIn" mat-flat-button color="accent" [routerLink]="['/register']">
+      Register
+    </a>
 
   </div>
 </nav>

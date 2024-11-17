@@ -1,9 +1,10 @@
 /* General Page Styles */
 body {
-    background-color: #f8f9fa;
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+    // add gradient background
+    background-color: #fff;
   }
   
   .container {
@@ -12,3 +13,5 @@ body {
     padding: 20px;
   }
   
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

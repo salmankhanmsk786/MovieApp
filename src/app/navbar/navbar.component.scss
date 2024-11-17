@@ -1,10 +1,8 @@
 nav {
-    background-color: #333;
+    background-color: #6d193c;
     color: white;
     padding: 1rem;
     display: flex;
-    align-items: center;
-    justify-content: center;
     
   }
   
@@ -12,32 +10,45 @@ nav {
     max-width: 50px;
     max-height: 50px;
     object-fit: contain;
+    
+  }
+
+  .navbar-title{
+    margin-left: 1rem;
+    font-size: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+    margin-top: 0.5rem;
 
-  .navbar-title {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-left: 1rem;
+  
 
   }
   
   .navbar-links {
     list-style: none;
     display: flex;
-    align-items: center;
+    gap: 1.5rem;
     justify-content: center;
-    gap: 1rem;
+    align-items: center;
+
+    
 
   }
+
+  .navbar-actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+  }
+
   
   .navbar-links a {
     color: white;
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     transition: color 0.3s;
   }
   
@@ -45,9 +56,6 @@ nav {
     color: #ff9800;
   }
   
-  .navbar-actions {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
+  .separator {
+    flex: 1 1 auto;
+}

@@ -1,0 +1,75 @@
+<div class="register">
+  <h1>Register</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <p>
+      <mat-error *ngIf="registerResult && !registerResult.success">
+        <strong>ERROR</strong>: {{registerResult.message}}
+      </mat-error>
+    </p>
+    <!-- firstname -->
+    <mat-form-field>
+      <mat-label>First Name:</mat-label>
+      <input matInput formControlName="firstName" required
+             placeholder="Insert First Name">
+      <mat-error *ngFor="let error of getErrors(form.get('firstName')!,
+          'First Name')">
+        {{error}}
+      </mat-error>
+    </mat-form-field>
+    <!-- lastname -->
+    <mat-form-field>
+      <mat-label>Last Name:</mat-label>
+      <input matInput formControlName="lastName" required
+             placeholder="Insert Last Name">
+      <mat-error *ngFor="let error of getErrors(form.get('lastName')!,
+          'Last Name')">
+        {{error}}
+      </mat-error>
+    </mat-form-field>
+    <!-- email -->
+    <mat-form-field>
+      <mat-label>Email:</mat-label>
+      <input matInput formControlName="email" required
+             placeholder="Insert email">
+      <mat-error *ngFor="let error of getErrors(form.get('email')!,
+          'Email')">
+        {{error}}
+      </mat-error>
+    </mat-form-field>
+    <!-- password -->
+    <mat-form-field>
+      <mat-label>Password:</mat-label>
+      <input matInput type="password" formControlName="password" required
+             placeholder="Insert Password">
+      <mat-error *ngFor="let error of getErrors(form.get('password')!,
+          'Password')">
+        {{error}}
+      </mat-error>
+    </mat-form-field>
+    <!-- confirm password -->
+    <mat-form-field>
+      <mat-label>Confirm Password:</mat-label>
+      <input matInput type="password" formControlName="confirmPassword" required
+             placeholder="Confirm Password">
+      <mat-error *ngFor="let error of getErrors(form.get('confirmPassword')!,
+          'Confirm Password')">
+        {{error}}
+      </mat-error>
+    </mat-form-field>
+    <!-- button -->
+    <div>
+      <button mat-flat-button color="primary"
+              type="submit">
+        Register
+      </button>
+      <button mat-flat-button color="secondary"
+              [routerLink]="['/']">
+        Cancel
+      </button>
+    </div>
+    
+  </form>
+</div>
+
+
+    

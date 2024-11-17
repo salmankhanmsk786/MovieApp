@@ -1,158 +1,37 @@
-.movie-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .movie-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .movie-item {
-    padding: 15px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    transition: background-color 0.3s;
-  }
-  
-  .movie-item:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .movie-title {
+.full-width {
+  width: 100%;
+}
+
+.mt-4 {
+ 
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
     font-size: 1.2rem;
-    font-weight: bold;
-    color: #007bff;
-  }
-  
-  .release-date {
-    font-style: italic;
-    color: #555;
-  }
-  
-  .movie-director {
-    margin-top: 5px;
-    font-size: 0.9rem;
-    color: #555;
-  }
-  
-  .no-movies {
-    text-align: center;
-    color: #888;
-    font-style: italic;
-  }
-
-  .form-container {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .add-movie-form h3 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-    color: #333;
-    width: 100%;
-
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-    background-color: #39c40e;
-
-
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
-
-  }
-  
-  input[type="text"],
-  input[type="date"] {
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
-    width: 100%;
-
     
   }
-  
-  button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #0056b3;
-  }
 
-  /* Grey color for the disabled submit button */
-.btn-disabled {
-  background-color: #cccccc; /* Light grey color */
-  border-color: #cccccc; /* Light grey border */
-  cursor: not-allowed; /* Show 'not-allowed' cursor */
-  color: #666666; /* Darker grey for text */
+}
+ 
+.modal-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 
-  .btn-secondary {
-    background-color: #ff0000;
-    width: 100%;
-    padding: 10px;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
 
+.mat-mdc-form-field {
+  
+}
 
+.mat-elevation-z8 {
+  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-top: 1rem;
 
-  .search-container {
-    margin-bottom: 20px;
-  }
-
-  
-
-  
-  .search-container input {
-    padding: 10px;
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
-    display: block;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  
-  
-  
+}
