@@ -5,43 +5,42 @@ import { LoginRequest } from './login-request';
 import { LoginResult } from './login-result';
 import { RegisterRequest } from '../register/register-request';
 import { RegisterResult } from '../register/register-result';
+import { ForgotPasswordRequest } from './forgot-password/forgot-password-request';
+import { ForgotPasswordResult } from './forgot-password/forgot-password-result';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  
-  private tokenKey: string = "token";
-  private email: string = "email";
+  private tokenKey: string = 'token';
+  private email: string = 'email';
   private _authStatus = new BehaviorSubject<boolean>(false);
   public authStatus = this._authStatus.asObservable();
 
-  constructor(
-    protected http: HttpClient) {
-  }
+  constructor(protected http: HttpClient) {}
 
-  isAuthenticated() : boolean {
+  isAuthenticated(): boolean {
     return this.getToken() !== null;
   }
-  getToken() : string | null {
+  getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
 
-  init() : void {
-    if (this.isAuthenticated())
-      this.setAuthStatus(true);
+  init(): void {
+    if (this.isAuthenticated()) this.setAuthStatus(true);
   }
 
- login(item: LoginRequest): Observable<LoginResult> {
+  login(item: LoginRequest): Observable<LoginResult> {
     var url = `https://localhost:7297/api/Account/login`;
-    return this.http.post<LoginResult>(url, item)
-      .pipe(tap(loginResult => {
+    return this.http.post<LoginResult>(url, item).pipe(
+      tap((loginResult) => {
         if (loginResult.success && loginResult.token) {
           localStorage.setItem(this.tokenKey, loginResult.token);
           localStorage.setItem(this.email, item.email);
           this.setAuthStatus(true);
         }
-      }));
+      })
+    );
   }
   logout() {
     localStorage.removeItem(this.tokenKey);
@@ -54,11 +53,19 @@ export class AuthService {
   register(item: RegisterRequest): Observable<RegisterResult> {
     var url = `https://localhost:7297/api/Account/register`;
     return this.http.post<RegisterResult>(url, item);
-    
   }
   getemail(): string {
     return localStorage.getItem(this.email) || '';
   }
 
-  
+  forgotPassword(
+    item: ForgotPasswordRequest
+  ): Observable<ForgotPasswordResult> {
+    var url = `https://localhost:7297/api/Account/forgotpassword`;
+    return this.http.post<ForgotPasswordResult>(url, item);
+  }
+  resetPassword(item: any): any {
+    var url = `https://localhost:7297/api/Account/resetpassword`;
+    return this.http.post(url, item);
+  }
 }

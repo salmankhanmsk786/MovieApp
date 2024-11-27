@@ -2,3 +2,32 @@ mat-form-field {
   display: block;
   margin: 10px 0;
 }
+
+.register {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.register h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.register button {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+.register p {
+  margin-top: 20px;
+  text-align: center;
+}

@@ -5,7 +5,7 @@ import { MovieListComponent } from './movie-list/movie-list.component';
 import { CommonModule } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { NavbarComponent } from './navbar/navbar.component'; 
+import { NavbarComponent } from './navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app.routes';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
@@ -28,7 +28,9 @@ import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsMod
 import { LoginComponent } from './auth/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import {  HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import {  HTTP_INTERCEPTORS } from '@angular/common/http';
     MovieListComponent,
     MovieDetailsComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,22 +61,19 @@ import {  HTTP_INTERCEPTORS } from '@angular/common/http';
     MatNativeDateModule,
     MatDialogModule,
     MatListModule,
-    MatSnackBarModule,   
+    MatSnackBarModule,
     MatSelectModule,
-    ReactiveFormsModule // Add ReactiveFormsModule here
-
+    ReactiveFormsModule, // Add ReactiveFormsModule here
   ],
   providers: [
-   
     provideHttpClient(),
-    provideAnimationsAsync(),// Updated way to provide HTTP client
+    provideAnimationsAsync(), // Updated way to provide HTTP client
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
-
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
