@@ -12,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<IAppEmailSender, EmailSender>();
+builder.Services.AddLogging(); // Add logging
 
 
 builder.Services.AddAuthentication(opt =>
@@ -49,9 +51,10 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequireNonAlphanumeric = true;
     options.Password.RequiredLength = 8;
+   
 })
-.AddEntityFrameworkStores<MovieContext>();
-//.AddApiEndpoints(); // Add API endpoints for Identity
+.AddEntityFrameworkStores<MovieContext>()
+.AddDefaultTokenProviders();
 
 // CORS policy
 
@@ -69,6 +72,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<JwtHandler>();
+
 
 var app = builder.Build();
 
@@ -88,7 +92,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-//app.MapIdentityApi<IdentityUser>(); // Map Identity API endpoints
 
 
 app.Run();
