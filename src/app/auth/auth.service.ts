@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { LoginRequest } from './login-request';
-import { LoginResult } from './login-result';
-import { RegisterRequest } from '../register/register-request';
-import { RegisterResult } from '../register/register-result';
+import { LoginRequest } from './login/login-request';
+import { LoginResult } from './login/login-result';
+import { RegisterRequest } from './register/register-request';
+import { RegisterResult } from './register/register-result';
 import { ForgotPasswordRequest } from './forgot-password/forgot-password-request';
 import { ForgotPasswordResult } from './forgot-password/forgot-password-result';
 

@@ -4,21 +4,36 @@ mat-form-field {
   width: 100%;
 }
 
-.forgotpassword {
+.login {
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
   margin: 0 auto;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
 
-.forgotpassword h1 {
+.login h1 {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.forgotpassword button {
+.login button {
   width: 100%;
   margin-top: 20px;
+}
+
+.login a {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.login p {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.login p a {
+  color: #007bff;
 }

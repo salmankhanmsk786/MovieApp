@@ -25,8 +25,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
-import { LoginComponent } from './auth/login.component';
-import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
@@ -45,9 +45,9 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
   imports: [
     BrowserModule,
     CommonModule,
-    NavbarComponent, // <-- Add NavbarComponent to imports
-    AboutComponent, // <-- Add AboutComponent to imports
-    FormsModule, // <-- Add FormsModule to imports
+    NavbarComponent,
+    AboutComponent,
+    FormsModule,
     AppRoutingModule,
     RouterModule,
     MatTableModule,

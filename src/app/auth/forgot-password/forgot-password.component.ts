@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { BaseFormComponent } from '../../base-form.component';
 import { ForgotPasswordRequest } from './forgot-password-request';
 import { ForgotPasswordResult } from './forgot-password-result';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-forgot-password',
@@ -15,7 +16,7 @@ export class ForgotPasswordComponent
   implements OnInit
 {
   forgotPasswordResult?: ForgotPasswordResult;
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private snackBar: MatSnackBar) {
     super();
   }
 
@@ -34,6 +35,14 @@ export class ForgotPasswordComponent
         this.forgotPasswordResult = result;
         if (result.success) {
           this.form.reset();
+          // show snackbar message that email has been sent
+          this.snackBar.open(
+            'if email exists, reset password link has been sent, please check your email',
+            'close',
+            {
+              duration: 6000,
+            }
+          );
         }
         console.error(result);
       },
@@ -41,6 +50,10 @@ export class ForgotPasswordComponent
         console.log(error);
         if (error.status == 401) {
           this.forgotPasswordResult = error.error;
+          // if email does not exist, show snackbar message
+          this.snackBar.open('email does not exist', 'close', {
+            duration: 3000,
+          });
         }
       },
     });
