@@ -9,8 +9,11 @@ import { AuthGuard } from './auth/auth.guard';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { ChatComponent } from './chat/chat.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent }, // Add HomeComponent for
+
   { path: 'about', component: AboutComponent },
   { path: 'movies', component: MovieListComponent },
   {
@@ -23,7 +26,7 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '**', redirectTo: '' }, // Redirect any unknown paths to the home page
 ];
 
 @NgModule({

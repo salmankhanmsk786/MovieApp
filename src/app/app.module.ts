@@ -35,7 +35,7 @@ import { ChatComponent } from './chat/chat.component';
 import { SignalRService } from './signalr.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
-import { environment } from '../environments/environment';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +47,7 @@ import { environment } from '../environments/environment';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     ChatComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
