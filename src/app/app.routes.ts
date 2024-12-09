@@ -8,6 +8,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { ChatComponent } from './chat/chat.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent },
@@ -21,7 +22,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-  { path: '', redirectTo: '/movies', pathMatch: 'full' },
+  { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
 ];
 
 @NgModule({

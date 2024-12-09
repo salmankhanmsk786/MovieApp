@@ -7,6 +7,7 @@ import { RegisterRequest } from './register/register-request';
 import { RegisterResult } from './register/register-result';
 import { ForgotPasswordRequest } from './forgot-password/forgot-password-request';
 import { ForgotPasswordResult } from './forgot-password/forgot-password-result';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +32,7 @@ export class AuthService {
   }
 
   login(item: LoginRequest): Observable<LoginResult> {
-    var url = `https://localhost:7297/api/Account/login`;
+    const url = `${environment.apiUrl}/Account/login`;
     return this.http.post<LoginResult>(url, item).pipe(
       tap((loginResult) => {
         if (loginResult.success && loginResult.token) {
@@ -51,7 +52,7 @@ export class AuthService {
     this._authStatus.next(isAuthenticated);
   }
   register(item: RegisterRequest): Observable<RegisterResult> {
-    var url = `https://localhost:7297/api/Account/register`;
+    const url = `${environment.apiUrl}/Account/register`;
     return this.http.post<RegisterResult>(url, item);
   }
   getemail(): string {
@@ -61,11 +62,11 @@ export class AuthService {
   forgotPassword(
     item: ForgotPasswordRequest
   ): Observable<ForgotPasswordResult> {
-    var url = `https://localhost:7297/api/Account/forgotpassword`;
+    const url = `${environment.apiUrl}/Account/forgotpassword`;
     return this.http.post<ForgotPasswordResult>(url, item);
   }
   resetPassword(item: any): any {
-    var url = `https://localhost:7297/api/Account/resetpassword`;
+    const url = `${environment.apiUrl}/Account/resetpassword`;
     return this.http.post(url, item);
   }
 }

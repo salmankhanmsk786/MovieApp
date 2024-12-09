@@ -1,19 +1,27 @@
-<div *ngIf="movie">
-    <h2>{{ movie.title }} - {{ movie.genre }}</h2>
-    <p><strong>Director:</strong> {{ movie.director }}</p>
-    <p><strong>Release Date:</strong> {{ movie.releaseDate | date }}</p>
-    <p><strong>Description:</strong> {{ movie.description }}</p>
-  
-    <h3>Reviews</h3>
-    <ul *ngIf="movie.reviews && movie.reviews.length > 0">
-      <li *ngFor="let review of movie.reviews">
-        <strong>{{ review.reviewerName }}</strong> - Rating: {{ review.rating }}/5
-        <p>{{ review.reviewText }}</p>
-      </li>
-    </ul>
-    <p *ngIf="!movie.reviews || movie.reviews.length === 0">No reviews available for this movie.</p>
-  
-    <!-- Back to Home Button -->
-    <button mat-raised-button color="primary" (click)="goBack()">Back to Home</button>
-  </div>
-  
+<div class="container" *ngIf="movie">
+  <h2>{{ movie.title }} - {{ movie.genre }}</h2>
+  <p><strong>Director:</strong> {{ movie.director }}</p>
+  <p><strong>Release Date:</strong> {{ movie.releaseDate | date }}</p>
+  <p><strong>Description:</strong> {{ movie.description }}</p>
+
+  <h3>Reviews</h3>
+  <ul *ngIf="movie.reviews && movie.reviews.length > 0">
+    <li *ngFor="let review of movie.reviews">
+      <strong>{{ review.reviewerName }}</strong>
+      <br />
+      <strong>Rating:</strong>
+      <ng-container *ngFor="let star of [].constructor(5); let i = index">
+        <mat-icon>{{ i < review.rating ? "star" : "star_border" }}</mat-icon>
+      </ng-container>
+      <p><strong>Review:</strong> {{ review.reviewText }}</p>
+    </li>
+  </ul>
+  <p *ngIf="!movie.reviews || movie.reviews.length === 0">
+    No reviews available for this movie.
+  </p>
+
+  <!-- Back to Home Button -->
+  <button mat-raised-button color="primary" (click)="goBack()">
+    Back to Home
+  </button>
+</div>

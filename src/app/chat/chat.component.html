@@ -1,0 +1,44 @@
+<div class="chat-container">
+  <h1>Welcome to the Chat Hub</h1>
+  <h6>Discuss your favorite movies with other users</h6>
+  <!-- Online Users Section -->
+  <mat-card class="online-users-card">
+    <mat-card-title>Online Users</mat-card-title>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let user of onlineUsers">
+          <mat-icon class="user-icon">person</mat-icon>
+          {{ user }}
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Chat Section -->
+  <mat-card class="chat-card">
+    <mat-card-title>Chat</mat-card-title>
+    <mat-card-content>
+      <div class="messages-container">
+        <div *ngFor="let msg of messages" class="message">
+          <span class="message-user"
+            ><strong>{{ msg.user }}:</strong></span
+          >
+          <span class="message-text">{{ msg.message }}</span>
+          <span class="message-timestamp">{{
+            msg.timestamp | date : "short"
+          }}</span>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions class="chat-actions">
+      <mat-form-field class="message-input" appearance="outline">
+        <mat-label>Type your message</mat-label>
+        <input matInput [(ngModel)]="message" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="sendMessage()">
+        Send
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

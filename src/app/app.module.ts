@@ -31,6 +31,11 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { ChatComponent } from './chat/chat.component';
+import { SignalRService } from './signalr.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -41,6 +46,7 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
     RegisterComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +69,9 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
     MatListModule,
     MatSnackBarModule,
     MatSelectModule,
-    ReactiveFormsModule, // Add ReactiveFormsModule here
+    ReactiveFormsModule,
+    MatCardModule,
+    MatDividerModule,
   ],
   providers: [
     provideHttpClient(),
@@ -73,6 +81,7 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
       useClass: AuthInterceptor,
       multi: true,
     },
+    SignalRService,
   ],
   bootstrap: [AppComponent],
 })

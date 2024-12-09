@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  TemplateRef,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { MovieService } from '../movie.service';
 import { Movie } from '../movie';
 import { Review } from '../reviews'; // Review interface
@@ -181,9 +176,7 @@ export class MovieListComponent implements OnInit {
     }
   }
 
-
   addMovie() {
-   
     this.movieService.addMovie(this.newMovie).subscribe({
       next: (addMovie) => {
         this.movies.push(addMovie); // Update the list with the new movie
@@ -218,7 +211,6 @@ export class MovieListComponent implements OnInit {
       this.dialogRef.close();
     }
   }
-
 
   // Update delete method
   deleteMovie(id: number): void {
@@ -308,7 +300,7 @@ export class MovieListComponent implements OnInit {
     if (!this.checkAuthentication()) {
       return;
     }
-    
+
     if (!movie || !movie.id) {
       console.error('Invalid movie selected');
       return;
@@ -408,11 +400,15 @@ export class MovieListComponent implements OnInit {
 
   checkAuthentication(): boolean {
     if (!this.authService.isAuthenticated()) {
-      this.snackBar.open('You must be logged in to perform this action.', 'Close', {
-        duration: 3000,
-        horizontalPosition: 'center',
-        verticalPosition: 'bottom',
-      });
+      this.snackBar.open(
+        'You must be logged in to perform this action.',
+        'Close',
+        {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+        }
+      );
       this.router.navigate(['/login']);
       return false;
     }

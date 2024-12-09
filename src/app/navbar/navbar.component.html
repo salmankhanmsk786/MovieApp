@@ -4,7 +4,7 @@
   </div>
 
   <div class="navbar-title">
-    <h5>Movie Management</h5>
+    <h5>MovieApp</h5>
   </div>
   <ul class="navbar-links">
     <a class="nav-home" [routerLink]="['/movies']">
@@ -15,7 +15,14 @@
       ></mat-icon>
       Home
     </a>
-
+    <a class="nav-chathub" [routerLink]="['/chat']">
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example chat icon"
+        fontIcon="chat"
+      ></mat-icon>
+      Chathub</a
+    >
     <a class="nav-article" [routerLink]="['/about']">
       <mat-icon
         aria-hidden="false"
@@ -37,15 +44,25 @@
     >
       Login
     </a>
-    <a *ngIf="isLoggedIn" mat-flat-button color="primary" (click)="onLogout()" [routerLink]="['/login']">
+    <a
+      *ngIf="isLoggedIn"
+      mat-flat-button
+      color="primary"
+      (click)="onLogout()"
+      [routerLink]="['/login']"
+    >
       Logout
     </a>
-    
+
     <span *ngIf="isLoggedIn">{{ email }}</span>
 
-    <a *ngIf="!isLoggedIn" mat-flat-button color="accent" [routerLink]="['/register']">
+    <a
+      *ngIf="!isLoggedIn"
+      mat-flat-button
+      color="accent"
+      [routerLink]="['/register']"
+    >
       Register
     </a>
-
   </div>
 </nav>
